@@ -9,7 +9,9 @@ SRCS = main.c \
        utils.c \
        coder.c \
        dongle.c \
-       sim.c
+       dongle_queue.c \
+       sim.c \
+       sim_stop.c
 
 OBJS = $(SRCS:.c=.o)
 
