@@ -1,0 +1,4 @@
+*.o
+codexion
+debug.txt
+.DS_Store
