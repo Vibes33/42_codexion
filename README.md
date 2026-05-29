@@ -1,7 +1,7 @@
 # 42_codexion
 
 ![Score](https://img.shields.io/badge/Score-100%2F100-success)
-![Language](https://img.shields.io/badge/Language-C_logo=c&logoColor=white)
+![Language](https://img.shields.io/badge/Language-C_?logo=c&logoColor=white)
 
 ## 📋 Table of Contents
 - [Description](#description)
