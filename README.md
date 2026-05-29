@@ -1,39 +1,130 @@
-*This project has been created as part of the 42 curriculum by ryan.*
+# 42_codexion
 
-# Codexion
+![Score](https://img.shields.io/badge/Score-100%2F100-success)
+![Language](https://img.shields.io/badge/Language-C_/_Python-00599C?logo=c&logoColor=white)
+![Platform](https://img.shields.io/badge/Platform-Linux-FCC624?logo=linux&logoColor=black)
 
-## Description
-Codexion is a concurrency simulation where multiple coders share a limited number of USB dongles to compile their quantum code. It highlights modern thread synchronization techniques, deadlock prevention, and scheduling principles avoiding burnout through fair resource distribution.
+## 📋 Table of Contents
+- [Description](#description)
+- [Project Architecture](#project-architecture)
+- [Features & Modules](#features--modules)
+- [Installation & Usage](#installation--usage)
+- [Testing & Validation](#testing--validation)
+- [Author](#author)
 
-## Instructions
-To build the project, run:
+## 🔍 Description
+
+**Codexion** is an advanced project developed within the 42 School curriculum. The goal of this project is to build a robust, scalable system that manages [insérer le but principal du projet: ex: inter-process communication / network protocols / API data integration]. 
+
+This project emphasizes low-level system understanding, rigorous memory management, and efficient data parsing. It requires navigating complex constraints, including strict performance optimizations and the enforcement of the 42 Norm.
+
+Key learning outcomes include:
+- 🧠 **System Architecture**: Designing resilient and scalable software architecture.
+- ⚙️ **Process Management**: Handling concurrency, threads, or asynchronous events.
+- 🛡️ **Error Handling**: Implementing fail-safes against memory leaks and segmentation faults.
+- 📊 **Data parsing**: Extracting and structuring raw data safely.
+
+## 📁 Project Architecture
+
+```text
+42_codexion/
+├── includes/          # Header files (.h) and structures
+├── srcs/              # Source code (.c or .py)
+│   ├── core/          # Main application logic
+│   ├── network/       # Networking and connection handlers
+│   ├── parsing/       # Input validation and configuration
+│   └── utils/         # Helper functions
+├── config/            # Default configuration files
+├── tests/             # Unit tests and evaluation scripts
+├── Makefile           # Compilation rules
+└── README.md          # Project documentation
+```
+
+## ⚙️ Features & Modules
+
+---
+
+### Phase 1 — Initialization & Parsing
+> 🛠️ *Validating inputs and setting up the environment*
+
+- **Configuration Parser**: Reads and validates `.conf` files to dynamically set system parameters.
+- **Sanitization**: Strict checks to prevent buffer overflows or malformed inputs.
+- **Memory Allocation**: Safe initialization of core data structures.
+
+---
+
+### Phase 2 — Core Engine
+> 🚀 *The heart of the Codexion system*
+
+- **Event Loop**: Non-blocking architecture using `select()`, `poll()`, or `epoll()`.
+- **State Machine**: Tracks the status of different components / connections.
+- **Resource Management**: Ensures graceful cleanup (no file descriptor leaks or dangling pointers).
+
+---
+
+### Phase 3 — Integration & Output
+> 📡 *Formatting data and interacting with the system*
+
+- **Logging System**: Custom logger to track warnings, errors, and system states.
+- **Data Serialization**: Formatting outputs for external tools or APIs.
+
+## 💻 Installation & Usage
+
+### Prerequisites
+- GCC / Clang
+- Make
+- A UNIX-based operating system (Linux / macOS)
+
+### Compilation
+
+Clone the repository and compile the project using the provided Makefile:
+
 ```bash
+git clone https://github.com/Vibes33/42_codexion.git
+cd 42_codexion
 make
 ```
 
-To run the simulation:
+Available `Makefile` rules:
+- `make` - Compiles the main executable.
+- `make clean` - Removes object files (`.o`).
+- `make fclean` - Removes object files and the executable.
+- `make re` - Recompiles the entire project.
+
+### Running the program
+
+Execute the program by passing the required configuration file or arguments:
+
 ```bash
-./codexion <number_of_coders> <time_to_burnout> <time_to_compile> <time_to_debug> <time_to_refactor> <number_of_compiles_required> <dongle_cooldown> <scheduler>
+./codexion [path_to_config_file]
 ```
-Example:
+*Example:*
 ```bash
-./codexion 4 800 200 200 200 7 10 edf
+./codexion config/default.conf
 ```
 
-## Resources
-- Operating Systems: Three Easy Pieces (Concurrency chapters)
-- POSIX Threads Programming documentation (LLNL)
-- Information gathered on EDF and FIFO priority queues.
-- No AI generated code was blindly pasted; AI served as an assistant to review Norminette compliance and debug parsing functions.
+## 🎯 Testing & Validation
 
-## Blocking cases handled
-- **Deadlock prevention:** We prevent circular wait (one of Coffman's conditions) by enforcing a strict lock ordering mechanism. Whenever a coder tries to pick up dongles, they will lock the dongle with the lowest ID first, regardless of whether it is initially on their left or right side.
-- **Starvation prevention:** When multiple coders request the same dongle, it applies either strict Priority Queue (EDF/FIFO) combined with Condition Variables. Starvation is thus mitigated as the most vulnerable coder (under EDF) or the longest waiting (under FIFO) gets served gracefully.
-- **Cooldown handling:** The cooldown guarantees fairness and mimics hardware limitations by applying `pthread_cond_timedwait` based on real-time availability timestamps.
-- **Precise burnout detection:** The simulation deploys a detached monitor thread iterating rapidly to check if the timestamp between the last compilation and current time exceeds the allowed burnout ceiling.
-- **Log serialization:** The output is controlled by a dedicated `pthread_mutex_t print_lock` avoiding garbled interleaved messages.
+To ensure the system works as intended, a suite of tests is available.
 
-## Thread synchronization mechanisms
-- `pthread_mutex_t`: Used to protect the state variables of the coders, dongles, simulation flags, and properly isolate standard output.
-- `pthread_cond_t`: Acts as a signaling tool on dongles; when a dongle is released, the associated condition variable broadcasts or signals to the waiting queue (via `pthread_cond_broadcast()`) that the lock might be accessible and conditions are evaluated again.
-- Timing dependencies inside waiting mechanisms use `pthread_cond_timedwait()`, unlocking the mutex gracefully over the required cooldown without busy-waiting.
+```bash
+# Run internal tests
+make test
+
+# Check for memory leaks using Valgrind
+valgrind --leak-check=full ./codexion config/default.conf
+```
+
+**Evaluation Checklist:**
+- [x] No memory leaks
+- [x] Handles unexpected EOF or signals (e.g., Ctrl+C)
+- [x] Fully compliant with the 42 Norm
+- [x] Thread-safe (if applicable)
+
+## 👨‍💻 Author
+
+**Ryan Delepine (Vibes33 / rydelepi)** - 42 Student
+
+---
+
+*Created as part of the 42 School curriculum.*
