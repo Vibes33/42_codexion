@@ -1,8 +1,7 @@
 # 42_codexion
 
 ![Score](https://img.shields.io/badge/Score-100%2F100-success)
-![Language](https://img.shields.io/badge/Language-C_/_Python-00599C?logo=c&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-Linux-FCC624?logo=linux&logoColor=black)
+![Language](https://img.shields.io/badge/Language-C_logo=c&logoColor=white)
 
 ## 📋 Table of Contents
 - [Description](#description)
